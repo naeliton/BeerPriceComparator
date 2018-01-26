@@ -1,14 +1,32 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Beer Price Comparator
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list >
+    <ion-item-sliding *ngFor="let cerv of cervejas">
+
+    <button ion-item (click)="editProduct(product.id)">
+       Cerveja: {{ cerv.descricao }}<br>
+       Tamalho: {{ cerv.tam }}ml<br>
+       Preco/ml: {{ cerv.precoMl }}<br>
+       Local: {{ cerv.local }}<br>
+     </button>
+
+     <ion-item-options side="left">
+       <button ion-button color="danger" (click)="removeCerveja(cerv)">
+         <ion-icon name="trash"></ion-icon>
+         Excluir
+       </button>
+     </ion-item-options>
+
+   </ion-item-sliding>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab  (click)="addCervejas()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-content>

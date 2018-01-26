@@ -1,0 +1,39 @@
+<!--
+  Generated template for the AddCerverjaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add Cerveja</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item>
+      <ion-label stacked>Cerveja</ion-label>
+      <ion-input type="text" name="name" [(ngModel)]="model.descricao"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Volume</ion-label>
+      <ion-input type="number" name="volume" [(ngModel)]="model.tam"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Preço</ion-label>
+      <ion-input type="number" name="price" [(ngModel)]="model.preco"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Local</ion-label>
+      <ion-input type="text" name="local" [(ngModel)]="model.local"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button block (click)="save()">Salvar</button>
+</ion-content>
