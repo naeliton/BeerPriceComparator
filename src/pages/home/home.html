@@ -11,10 +11,11 @@
     <ion-item-sliding *ngFor="let cerv of cervejas">
 
     <button ion-item (click)="editProduct(product.id)">
-       Cerveja: {{ cerv.descricao }}<br>
-       Tamalho: {{ cerv.tam }}ml<br>
-       Preco/ml: {{ cerv.precoMl }}<br>
-       Local: {{ cerv.local }}<br>
+       Cerveja: {{ cerv.beer_name }}<br>
+       Tamalho: {{ cerv.volume }}ml<br>
+       Preco/ml: {{ cerv.price_per_ml }}<br>
+       Latitude: {{ cerv.seller_latitude }}<br>
+       Longitude: {{ cerv.seller_longitude }}<br>
      </button>
 
      <ion-item-options side="left">

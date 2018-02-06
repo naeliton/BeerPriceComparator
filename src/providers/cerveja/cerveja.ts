@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../database/database';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 /*
   Generated class for the CervejaProvider provider.
 
@@ -10,88 +12,76 @@ import { DatabaseProvider } from '../database/database';
 @Injectable()
 export class CervejaProvider {
 
-  constructor(private dbProvider: DatabaseProvider) { }
+  private API_URL = 'http://agora-server.herokuapp.com/';
+  constructor(private dbProvider: DatabaseProvider,public http: Http) { }
 
   public insert(cerveja: Cerveja) {
-   return this.dbProvider.getDB()
-     .then((db: SQLiteObject) => {
-       let sql = 'insert into cerveja (descricao, local, preco, tam,precoMl) values (?, ?, ?, ?,?)';
-       let data = [cerveja.descricao, cerveja.local, cerveja.preco, cerveja.tam,cerveja.precoMl];
-       console.log(data);
-       return db.executeSql(sql, data)
-         .catch((e) => console.error(e));
-     })
-     .catch((e) => console.error(e));
+    return new Promise((resolve, reject) => {
+      var data = {
+        beer_name: cerveja.beer_name,
+        volume: cerveja.volume,
+        price_per_ml: cerveja.price_per_ml,
+        seller_latitude: cerveja.seller_latitude,
+        seller_longitude: cerveja.seller_longitude,
+      };
+      this.http.post(this.API_URL + '/beersale', data,{})
+        .subscribe((result: any) => {
+          resolve(result.json());
+        },
+        (error) => {
+          reject(error.json());
+        });
+    });
  }
 
  public remove(id: number) {
-     return this.dbProvider.getDB()
-       .then((db: SQLiteObject) => {
-         let sql = 'delete from cerveja where id = ?';
-         let data = [id];
-           console.log(sql + data);
-         return db.executeSql(sql, data)
-           .catch((e) => console.error(e));
-       })
-       .catch((e) => console.error(e));
+   return new Promise((resolve, reject) => {
+     let url = this.API_URL + 'beersale/' + id;
+     this.http.delete(url)
+       .subscribe((result: any) => {
+         resolve(result.json());
+       },
+       (error) => {
+         reject(error.json());
+       });
+   });
+
    }
 
    public get(id: number) {
-    return this.dbProvider.getDB()
-      .then((db: SQLiteObject) => {
-        let sql = 'select * from cerveja where id = ?';
-        let data = [id];
+     return new Promise((resolve, reject) => {
+     let url = this.API_URL + '/beersale/' + id;
 
-        return db.executeSql(sql, data)
-          .then((data: any) => {
-            if (data.rows.length > 0) {
-              let item = data.rows.item(0);
-              let cerveja = new Cerveja();
-              cerveja.id = item.id;
-              cerveja.descricao = item.descricao;
-              cerveja.local = item.local;
-              cerveja.preco = item.preco;
-              cerveja.tam= item.tam;
-              cerveja.precoMl = item.precoMl;
-              return cerveja;
-            }
-
-            return null;
-          })
-          .catch((e) => console.error(e));
-      })
-      .catch((e) => console.error(e));
+     this.http.get(url)
+       .subscribe((result: any) => {
+         resolve(result.json());
+       },
+       (error) => {
+         reject(error.json());
+       });
+   });
   }
 
  public getAll() {
-  return this.dbProvider.getDB()
-    .then((db: SQLiteObject) => {
-      let sql = 'SELECT * FROM cerveja';
-      var data: any[] = [];
-      return db.executeSql(sql,{})
-        .then((data: any) => {
-          if (data.rows.length > 0) {
-            let cervejas: any[] = [];
-            for (var i = 0; i < data.rows.length; i++) {
-              var cerveja = data.rows.item(i);
-              cervejas.push(cerveja);
-            }
-            return cervejas;
-          } else {
-            return [];
-          }
-        })
-        .catch((e) => console.error(e));
-    })
-    .catch((e) => console.error(e));
+   return new Promise((resolve, reject) => {
+         let url = this.API_URL + 'beersales';
+
+         this.http.get(url)
+           .subscribe((result: any) => {
+             resolve(result.json());
+           },
+           (error) => {
+             reject(error.json());
+           });
+       });
 }
 }
 
 export class Cerveja {
   id: number;
-  descricao: string;
-  local: string;
-  preco: number;
-  tam: number;
-  precoMl : string;
+  beer_name: string;
+  price_per_ml: number;
+  volume: number;
+  seller_latitude: number;
+  seller_longitude: number;
 }

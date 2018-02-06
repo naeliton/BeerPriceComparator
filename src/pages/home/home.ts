@@ -16,9 +16,13 @@ export class HomePage {
 
   getAllCervejas() {
     this.cervejaProvider.getAll()
-      .then((result: any[]) => {
-        this.cervejas = result;
-      });
+      .then((result: any) => {
+        for (var i = 0; i < result.length; i++) {
+          var cerveja = result[i];
+          this.cervejas.push(cerveja);
+        }
+
+      })
   }
 
   addCervejas() {

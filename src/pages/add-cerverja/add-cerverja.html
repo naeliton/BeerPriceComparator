@@ -18,20 +18,32 @@
 
     <ion-item>
       <ion-label stacked>Cerveja</ion-label>
-      <ion-input type="text" name="name" [(ngModel)]="model.descricao"></ion-input>
+          <ion-select [(ngModel)]="model.beer_name">
+          <ion-option value="Petropolis">Petropolis</ion-option>
+          <ion-option value="Skol">Skol</ion-option>
+          <ion-option value="Heineken">Heineken</ion-option>
+          <ion-option value="Stella">Stella</ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label stacked>Volume</ion-label>
-      <ion-input type="number" name="volume" [(ngModel)]="model.tam"></ion-input>
+      <ion-input type="number" name="volume" [(ngModel)]="model.volume"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Preço</ion-label>
-      <ion-input type="number" name="price" [(ngModel)]="model.preco"></ion-input>
+      <ion-input type="number" name="price" [(ngModel)]="model.price"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Local</ion-label>
-      <ion-input type="text" name="local" [(ngModel)]="model.local"></ion-input>
+      <ion-label stacked>Latitude</ion-label>
+      <ion-input type="number" name="seller_latitude" [(ngModel)]="model.seller_latitude"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Longitude</ion-label>
+      <ion-input type="number" name="seller_longitude" [(ngModel)]="model.seller_longitude"></ion-input>
+    </ion-item>
+    <ion-item>
+      <div #map id="map"></div>
     </ion-item>
   </ion-list>
 
