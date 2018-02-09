@@ -87,6 +87,6 @@ export class Cerveja {
   price_per_ml: number;
   price: number;
   volume: number;
-  seller_latitude: number;
-  seller_longitude: number;
+  seller_latitude: string;
+  seller_longitude: string;
 }
