@@ -3,6 +3,7 @@ import { SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../database/database';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+ import * as $ from 'jquery';
 /*
   Generated class for the CervejaProvider provider.
 
@@ -17,20 +18,23 @@ export class CervejaProvider {
 
   public insert(cerveja: Cerveja) {
     return new Promise((resolve, reject) => {
-      var data = {
-        beer_name: cerveja.beer_name,
-        volume: cerveja.volume,
-        price_per_ml: cerveja.price_per_ml,
-        seller_latitude: cerveja.seller_latitude,
-        seller_longitude: cerveja.seller_longitude,
-      };
-      this.http.post(this.API_URL + '/beersale', data,{})
-        .subscribe((result: any) => {
-          resolve(result.json());
-        },
-        (error) => {
-          reject(error.json());
-        });
+      $.ajax({
+   		    url: this.API_URL + '/beersale',
+   		    type: "POST",
+   		    data: {
+            beer_name: cerveja.beer_name,
+            price_per_ml: cerveja.price,
+            volume: cerveja.volume,
+            seller_latitude: cerveja.seller_latitude,
+            seller_longitude: cerveja.seller_longitude
+          },
+          success: function(data){
+            resolve(data);
+            },
+          error: function(data){
+              reject(data);
+          }
+        })
     });
  }
 
@@ -81,6 +85,7 @@ export class Cerveja {
   id: number;
   beer_name: string;
   price_per_ml: number;
+  price: number;
   volume: number;
   seller_latitude: number;
   seller_longitude: number;

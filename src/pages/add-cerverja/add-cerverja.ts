@@ -20,11 +20,12 @@ declare var google;
 
 export class AddCerverjaPage {
   @ViewChild('map') mapElement;
-  model: Cerveja;
+  model: Cerveja  = new Cerveja();
+  seller_latitude: number = 0;
 
   constructor(    public navCtrl: NavController, public navParams: NavParams,
     private toast: ToastController, private cervejaProvider: CervejaProvider) {
-    this.model = new Cerveja();
+
   }
 
   ionViewDidLoad() {
@@ -48,17 +49,19 @@ export class AddCerverjaPage {
  }
 
  initMap(){
-   let latLng = new google.maps.LatLng(-34.9000,138.0000);
+   let latLng = new google.maps.LatLng(-12.963833,-38.499116);
    let mapOptions = {
-
      center: latLng,
      zoom: 12,
      mapTypeId: google.maps.MapTypeId.ROADMAP
    };
 
   var map =new google.maps.Map(this.mapElement.nativeElement,mapOptions );
-  map.addListener('click', function(e) {
-    console.log(e.getBounds());
+  map.addListener('dblclick', function(e) {
+    var latLng = new google.maps.LatLng(map.getBounds().b.b, map.getBounds().f.b);
+    console.log(map.getBounds().b.b);
+    this.seller_latitude = 1;
+    console.log(this.seller_latitude);
   });
  }
 

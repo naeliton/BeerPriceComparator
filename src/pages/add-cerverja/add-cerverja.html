@@ -36,11 +36,14 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Latitude</ion-label>
-      <ion-input type="number" name="seller_latitude" [(ngModel)]="model.seller_latitude"></ion-input>
+      <ion-input type="number" name="seller_latitude" id="seller_latitude" [(ngModel)]="seller_latitude"
+      [value]=""></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Longitude</ion-label>
-      <ion-input type="number" name="seller_longitude" [(ngModel)]="model.seller_longitude"></ion-input>
+      <ion-input type="number" name="seller_longitude" id="seller_latitude"
+      [(ngModel)]="model.seller_longitude"
+      [value]=""></ion-input>
     </ion-item>
     <ion-item>
       <div #map id="map"></div>
